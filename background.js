@@ -13,6 +13,7 @@ const apiData = {
     "Content-Type": "application/json",
   },
 };
+const errorResumeMinutes = 1;
 chrome.runtime.onInstalled.addListener(function () {
   console.log("Extension Loaded");
   resetScraper();
@@ -56,6 +57,15 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
     console.error("Error handling UNLOAD message:", error);
   }
 });
+chrome.runtime.onMessage.addListener((object, sender, response) => {
+  const { type } = object;
+  if (type === "LISTING_ERROR") {
+    console.error(`Listing error resuming after ${errorResumeMinutes}mins`);
+    closeTab();
+    setTimeout(() => scrapeListing(), errorResumeMinutes * 60 * 1000);
+  }
+});
+
 const closeTab = () => {
   if (scraper.tabId) chrome.tabs.remove(scraper.tabId);
   scraper.tabId = null;
