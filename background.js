@@ -40,8 +40,6 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
   try {
     const { type, listing } = object;
     if (type === "LISTING_SCRAPED") {
-      incrementListing();
-      closeTab();
       console.log("Sending listing to api....");
       fetch(apiUrl, { ...apiData, body: JSON.stringify({ html: listing, link: getCurrentListing() }) })
         .then((response) => {
@@ -50,6 +48,8 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
         })
         .then((data) => console.log("Response successful", data))
         .catch((error) => console.error(`Error when saving listing: ${error}`));
+      closeTab();
+      incrementListing();
       scrapeListing();
     }
   } catch (error) {
@@ -69,10 +69,10 @@ const scrapeListing = () => {
   const listing = getCurrentListing();
   const page = getCurrentPage();
   if (listing) {
-    console.log(`Index : ${scraper.listingsIndex}, Creating tab for listing ${listing}`);
+    console.log(`Index : ${scraper.listingsIndex} out of ${scraper.listings.length}, Creating tab for listing ${listing}`);
     createTab(listing);
   } else if (page) {
-    console.log(`Index : ${scraper.pagesIndex}, Creating tab for page ${page}`);
+    console.log(`Index : ${scraper.pagesIndex} out of ${scraper.pages.length}, Creating tab for page ${page}`);
     createTab(page);
     resetListings();
   } else {
