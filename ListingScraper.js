@@ -1,5 +1,5 @@
-const min = 5;
-const max = 10;
+const min = 0;
+const max = 0;
 
 setTimeout(() => {
   chrome.runtime.sendMessage({

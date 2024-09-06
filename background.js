@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
       closeTab();
       console.log(`Got Listings : ${listings.length}`);
       scraper.listings = listings;
-      if (pages) {
+      if (pages.length > 0) {
         console.log(`Got Pages : ${pages.length}`);
         scraper.pages = pages;
       }
