@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Minimal Manifest",
+  "version": "1.0.0",
+  "description": "A basic example extension with only required keys",
+  "content_scripts": [
+    {
+      "matches": ["https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/*"],
+      "js": ["ListingsPageScraper.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.realtor.com/realestateandhomes-detail/*"],
+      "js": ["ListingScraper.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}
