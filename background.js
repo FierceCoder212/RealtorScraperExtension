@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
       incrementListing();
       closeTab();
       console.log("Sending listing to api....");
-      fetch(apiUrl, { ...apiData, body: JSON.stringify({ html: listing }) })
+      fetch(apiUrl, { ...apiData, body: JSON.stringify({ html: listing, link: getCurrentListing() }) })
         .then((response) => {
           if (!response.ok) throw new Error(`Server error: ${response.status}`);
           return response.text();
