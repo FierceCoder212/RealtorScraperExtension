@@ -13,7 +13,7 @@ const apiData = {
     "Content-Type": "application/json",
   },
 };
-const errorResumeMinutes = 1;
+let errorResumeMinutes = 1;
 chrome.runtime.onInstalled.addListener(function () {
   console.log("Extension Loaded");
   resetScraper();
@@ -23,6 +23,7 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
   try {
     const { type, listings, pages } = object;
     if (type === "LISTINGS_SCRAPED") {
+      errorResumeMinutes = 1;
       incrementPage();
       closeTab();
       console.log(`Got Listings : ${listings.length}`);
@@ -41,6 +42,7 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
   try {
     const { type, listing } = object;
     if (type === "LISTING_SCRAPED") {
+      errorResumeMinutes = 1;
       console.log("Sending listing to api....");
       fetch(apiUrl, { ...apiData, body: JSON.stringify({ html: listing, link: getCurrentListing() }) })
         .then((response) => {
@@ -59,8 +61,18 @@ chrome.runtime.onMessage.addListener((object, sender, response) => {
 });
 chrome.runtime.onMessage.addListener((object, sender, response) => {
   const { type } = object;
+  if (type === "LISTINGS_ERROR") {
+    console.error(`Listings error resuming after ${errorResumeMinutes}mins`);
+    errorResumeMinutes += 1;
+    closeTab();
+    setTimeout(() => scrapeListing(), errorResumeMinutes * 60 * 1000);
+  }
+});
+chrome.runtime.onMessage.addListener((object, sender, response) => {
+  const { type } = object;
   if (type === "LISTING_ERROR") {
-    console.error(`Listing error resuming after ${errorResumeMinutes}mins`);
+    console.error(`Listings page error resuming after ${errorResumeMinutes}mins`);
+    errorResumeMinutes += 1;
     closeTab();
     setTimeout(() => scrapeListing(), errorResumeMinutes * 60 * 1000);
   }

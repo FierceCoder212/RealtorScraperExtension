@@ -57,6 +57,7 @@ const scrapePages = () => {
     for (let i = 1; i <= totalPages; i++) pagesUrl.push(`${currentPageUrl}/pg-${i}`);
   }
   const listings = document.querySelectorAll("section[data-testid=property-list] div[id^=placeholder_property] div[data-testid=card-content] a");
+  if (listings.length === 0) chrome.runtime.sendMessage({ type: "LISTINGS_ERROR" });
   const listingsUrl = [];
   for (const listing of listings) {
     const relativeHref = listing.getAttribute("href");
