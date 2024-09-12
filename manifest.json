@@ -5,7 +5,7 @@
   "description": "A basic example extension with only required keys",
   "content_scripts": [
     {
-      "matches": ["https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/*"],
+      "matches": ["https://www.realtor.com/realestateandhomes-search/Texas/*"],
       "js": ["ListingsPageScraper.js"],
       "run_at": "document_idle"
     },

@@ -1,6 +1,6 @@
 const scraper = {
   tabId: null,
-  baseUrl: "https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600",
+  baseUrl: "https://www.realtor.com/realestateandhomes-search/Texas",
   pages: [],
   listings: [],
   pagesIndex: 0,

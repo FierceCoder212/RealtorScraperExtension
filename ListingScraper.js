@@ -3,7 +3,7 @@ const max = 0;
 
 setTimeout(() => {
   try {
-    const listingContainer = document.querySelector('div[class="sc-2940a84d-0 ifHyQT"]').outerHTML;
+    const listingContainer = document.querySelector("div[data-testid=ldp-main-content] > div[data-testid=hero-container]+div:has(div[data-testid=status-indicator])").outerHTML;
     chrome.runtime.sendMessage({ type: "LISTING_SCRAPED", listing: listingContainer });
   } catch (e) {
     chrome.runtime.sendMessage({ type: "LISTING_ERROR" });
