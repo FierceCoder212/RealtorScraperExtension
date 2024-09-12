@@ -91,7 +91,7 @@ const scrapeListing = () => {
   const listing = getCurrentListing();
   const page = getCurrentPage();
   if (listing) {
-    console.log(`Index : ${scraper.listingsIndex} out of ${scraper.listings.length}, Creating tab for listing ${listing}`);
+    console.log(`Index : ${scraper.listingsIndex} out of ${scraper.listings.length}, Page-${scraper.pagesIndex} of ${scraper.pages.length}, Creating tab for listing ${listing}`);
     createTab(listing);
   } else if (page) {
     console.log(`Index : ${scraper.pagesIndex} out of ${scraper.pages.length}, Creating tab for page ${page}`);
