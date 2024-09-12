@@ -58,19 +58,21 @@ const scrapePages = () => {
   }
   const listings = document.querySelectorAll("section[data-testid=property-list] div[id^=placeholder_property] div[data-testid=card-content] a");
   if (listings.length === 0) chrome.runtime.sendMessage({ type: "LISTINGS_ERROR" });
-  const listingsUrl = [];
-  for (const listing of listings) {
-    const relativeHref = listing.getAttribute("href");
-    const fullUrl = new URL(relativeHref, currentUrl).href;
-    listingsUrl.push(fullUrl);
+  else {
+    const listingsUrl = [];
+    for (const listing of listings) {
+      const relativeHref = listing.getAttribute("href");
+      const fullUrl = new URL(relativeHref, currentUrl).href;
+      listingsUrl.push(fullUrl);
+    }
+    chrome.runtime.sendMessage({
+      type: "LISTINGS_SCRAPED",
+      listings: listingsUrl,
+      page: getPageFromUrl(currentUrl),
+      pages: pagesUrl,
+    });
+    console.log(listings.length);
   }
-  chrome.runtime.sendMessage({
-    type: "LISTINGS_SCRAPED",
-    listings: listingsUrl,
-    page: getPageFromUrl(currentUrl),
-    pages: pagesUrl,
-  });
-  console.log(listings.length);
 };
 const startScraping = async () => {
   await scrollPage();
