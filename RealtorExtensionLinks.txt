@@ -1,0 +1,5 @@
+https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/price-na-100000
+https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/price-100000-400000
+https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/price-400000-1000000
+https://www.realtor.com/realestateandhomes-search/Texas/lot-sqft-435600/price-1000000-na
+Last Id=40720
